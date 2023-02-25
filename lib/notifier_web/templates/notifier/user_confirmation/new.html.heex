@@ -2,7 +2,7 @@
 
 <.form let={f} for={:user} action={Routes.notifier_user_confirmation_path(@conn, :create)}>
   <%= label f, :email %>
-  <%= email_input f, :email, required: true %>
+  <%= email_input f, :email, required: true, autocomplete: "off" %>
 
   <div>
     <%= submit "Resend confirmation instructions" %>

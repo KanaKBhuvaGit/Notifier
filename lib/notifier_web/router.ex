@@ -35,15 +35,15 @@ defmodule NotifierWeb.Router do
   # If your application does not have an admins-only section yet,
   # you can use Plug.BasicAuth to set up some basic authentication
   # as long as you are also using SSL (which you should anyway).
-  if Mix.env() in [:dev, :test] do
-    import Phoenix.LiveDashboard.Router
+  # if Mix.env() in [:dev, :test] do
+  #   import Phoenix.LiveDashboard.Router
 
-    scope "/" do
-      pipe_through :browser
+  #   scope "/" do
+  #     pipe_through :browser
 
-      live_dashboard "/dashboard", metrics: NotifierWeb.Telemetry
-    end
-  end
+  #     live_dashboard "/dashboard", metrics: NotifierWeb.Telemetry
+  #   end
+  # end
 
   # Enables the Swoosh mailbox preview in development.
   #
@@ -89,5 +89,12 @@ defmodule NotifierWeb.Router do
     post "/users/confirm", UserConfirmationController, :create
     get "/users/confirm/:token", UserConfirmationController, :edit
     post "/users/confirm/:token", UserConfirmationController, :update
+  end
+
+  scope "/api", NotifierWeb.NotifierApi do
+    pipe_through :api
+    get "/users/log_in", ApiUserSessionController, :index
+    post "/users/log_in", ApiUserSessionController, :create
+    delete "/users/log_out", ApiUserSessionController, :delete
   end
 end

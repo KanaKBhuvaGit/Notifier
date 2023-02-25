@@ -8,10 +8,10 @@ defmodule NotifierWeb.ErrorHelpers do
   @doc """
   Generates tag for inlined form input errors.
   """
-  def error_tag(form, field) do
+  def error_tag(form, field, class \\ [class: "invalid-feedback"]) do
     Enum.map(Keyword.get_values(form.errors, field), fn error ->
       content_tag(:span, translate_error(error),
-        class: "invalid-feedback",
+        class: Keyword.get(class, :class),
         phx_feedback_for: input_name(form, field)
       )
     end)
@@ -42,6 +42,21 @@ defmodule NotifierWeb.ErrorHelpers do
       Gettext.dngettext(NotifierWeb.Gettext, "errors", msg, msg, count, opts)
     else
       Gettext.dgettext(NotifierWeb.Gettext, "errors", msg, opts)
+    end
+  end
+
+  def error_ring(f, field) do
+    with :validate <- f.source.action do
+      case Keyword.fetch(f.errors, field) do
+        {:ok, _} ->
+          ""
+
+        :error ->
+          ""
+      end
+    else
+      _ ->
+        ""
     end
   end
 end

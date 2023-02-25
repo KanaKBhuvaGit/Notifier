@@ -8,11 +8,11 @@
   <% end %>
 
   <%= label f, :email %>
-  <%= email_input f, :email, required: true %>
+  <%= text_input f, :email, autocomplete: "off" %>
   <%= error_tag f, :email %>
 
   <%= label f, :password %>
-  <%= password_input f, :password, required: true %>
+  <%= password_input f, :password, autocomplete: "off" %>
   <%= error_tag f, :password %>
 
   <div>
